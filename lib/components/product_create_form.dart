@@ -3,7 +3,9 @@ import '../data/category_data.dart';
 import '../model/category.dart';
 
 class ProductCreateForm extends StatefulWidget {
-  const ProductCreateForm({super.key});
+  final Function(String, String, int, double, double, Category) onSubmit;
+
+  const ProductCreateForm({super.key, required this.onSubmit});
 
   @override
   _ProductCreateFormState createState() => _ProductCreateFormState();
@@ -145,7 +147,16 @@ class _ProductCreateFormState extends State<ProductCreateForm> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          widget.onSubmit(
+                            _nameController.text,
+                            _barcodeController.text,
+                            int.parse(_stockUnitController.text),
+                            double.parse(_priceController.text),
+                            double.parse(_costPriceController.text),
+                            _selectedCategory,
+                          );
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Theme.of(context).primaryColor,
                         ),

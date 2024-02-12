@@ -4,6 +4,7 @@ import 'package:pdv_app/screens/shift_screen.dart';
 import 'package:pdv_app/screens/show_shift_screen.dart';
 import 'package:pdv_app/utils/app_router.dart';
 import './data/shifts_data.dart';
+import './data/product.dart';
 
 void main() => runApp(MyApp());
 
@@ -32,7 +33,7 @@ class _MyAppState extends State<MyApp> {
       routes: {
         AppRouter.home: (_) => ShiftScreen(shiftsData: shiftsData),
         AppRouter.showShift: (_) => const ShowShiftScreen(),
-        AppRouter.product: (_) => const ProductScreen(),
+        AppRouter.product: (_) => ProductScreen(productsData: productData),
       },
     );
   }

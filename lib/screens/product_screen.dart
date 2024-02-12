@@ -1,13 +1,59 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:pdv_app/components/category_create_form.dart';
 import 'package:pdv_app/components/main_drawer.dart';
 import '../components/product_item.dart';
-import '../data/product.dart';
 import '../functions/open_modal.dart';
 import '../components/product_create_form.dart';
+import '../model/category.dart';
+import '../model/product.dart';
+import '../data/category_data.dart';
 
-class ProductScreen extends StatelessWidget {
-  const ProductScreen({super.key});
+class ProductScreen extends StatefulWidget {
+  final List<Product> productsData;
+  const ProductScreen({super.key, required this.productsData});
+
+  @override
+  State<ProductScreen> createState() => _ProductScreenState();
+}
+
+class _ProductScreenState extends State<ProductScreen> {
+  late List<Product> _productsData;
+
+  @override
+  void initState() {
+    super.initState();
+    _productsData = widget.productsData;
+  }
+
+  _submitCategoryForm(String form) {
+    final newCategory = Category(
+      id: Random().nextDouble().toString(),
+      name: form,
+    );
+    categoryData.add(newCategory);
+    Navigator.of(context).pop();
+  }
+
+  void _onCreateProduct(String name, String barcode, int stockUnit,
+      double price, double costPrice, Category category) {
+    final newProduct = Product(
+      id: Random().nextDouble().toString(),
+      nome: name,
+      cod_barras: barcode,
+      unidade: stockUnit,
+      preco: price,
+      preco_custo: costPrice,
+      categoria: category,
+    );
+
+    setState(() {
+      _productsData.add(newProduct);
+    });
+
+    Navigator.of(context).pop();
+  }
 
   Widget _actionButton({
     required IconData icon,
@@ -33,8 +79,6 @@ class ProductScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _products = prodcutData;
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Produtos'),
@@ -53,7 +97,7 @@ class ProductScreen extends StatelessWidget {
                   context: context,
                   onPressed: () => OpenModal.openModal(
                     context,
-                    const ProductCreateForm(),
+                    ProductCreateForm(onSubmit: _onCreateProduct),
                   ),
                 ),
                 _actionButton(
@@ -62,7 +106,7 @@ class ProductScreen extends StatelessWidget {
                   context: context,
                   onPressed: () => OpenModal.openModal(
                     context,
-                    const CategoryCreateForm(),
+                    CategoryCreateForm(submitForm: _submitCategoryForm),
                   ),
                 )
               ],
@@ -71,9 +115,9 @@ class ProductScreen extends StatelessWidget {
             Container(
               height: MediaQuery.of(context).size.height * 0.8,
               child: ListView.builder(
-                itemCount: _products.length,
+                itemCount: _productsData.length,
                 itemBuilder: (ctx, index) {
-                  return ProductItem(product: _products[index]);
+                  return ProductItem(product: _productsData[index]);
                 },
               ),
             )

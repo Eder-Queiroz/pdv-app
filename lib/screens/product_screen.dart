@@ -8,7 +8,9 @@ import '../components/product_create_form.dart';
 
 class ProductScreen extends StatelessWidget {
   const ProductScreen({super.key});
+  _submitCategoryForm(String form){
 
+  }
   Widget _actionButton({
     required IconData icon,
     required String label,
@@ -62,7 +64,7 @@ class ProductScreen extends StatelessWidget {
                   context: context,
                   onPressed: () => OpenModal.openModal(
                     context,
-                    const CategoryCreateForm(),
+                    CategoryCreateForm(submitForm:_submitCategoryForm),
                   ),
                 )
               ],

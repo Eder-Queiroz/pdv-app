@@ -33,7 +33,7 @@ class _MyAppState extends State<MyApp> {
       routes: {
         AppRouter.home: (_) => ShiftScreen(shiftsData: shiftsData),
         AppRouter.showShift: (_) => const ShowShiftScreen(),
-        AppRouter.product: (_) => ProductScreen(prodcutsData: prodcutData),
+        AppRouter.product: (_) => ProductScreen(productsData: productData),
       },
     );
   }

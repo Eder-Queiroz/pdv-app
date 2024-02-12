@@ -1,7 +1,7 @@
 import '../model/product.dart';
 import 'category_data.dart';
 
-List<Product> prodcutData = [
+List<Product> productData = [
   Product(
     id: '1',
     nome: 'Coca-Cola',

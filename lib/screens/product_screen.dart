@@ -8,10 +8,11 @@ import '../functions/open_modal.dart';
 import '../components/product_create_form.dart';
 import '../model/category.dart';
 import '../model/product.dart';
+import '../data/category_data.dart';
 
 class ProductScreen extends StatefulWidget {
-  final List<Product> prodcutsData;
-  const ProductScreen({super.key, required this.prodcutsData});
+  final List<Product> productsData;
+  const ProductScreen({super.key, required this.productsData});
 
   @override
   State<ProductScreen> createState() => _ProductScreenState();
@@ -23,10 +24,17 @@ class _ProductScreenState extends State<ProductScreen> {
   @override
   void initState() {
     super.initState();
-    _productsData = widget.prodcutsData;
+    _productsData = widget.productsData;
   }
 
-  _submitCategoryForm(String form) {}
+  _submitCategoryForm(String form) {
+    final newCategory = Category(
+      id: Random().nextDouble().toString(),
+      name: form,
+    );
+    categoryData.add(newCategory);
+    Navigator.of(context).pop();
+  }
 
   void _onCreateProduct(String name, String barcode, int stockUnit,
       double price, double costPrice, Category category) {
@@ -40,7 +48,9 @@ class _ProductScreenState extends State<ProductScreen> {
       categoria: category,
     );
 
-    _productsData.add(newProduct);
+    setState(() {
+      _productsData.add(newProduct);
+    });
 
     Navigator.of(context).pop();
   }

@@ -1,24 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:pdv_app/model/product.dart';
 import '../data/category_data.dart';
 import '../model/category.dart';
 
-class ProductCreateForm extends StatefulWidget {
+class ProductForm extends StatefulWidget {
   final Function(String, String, int, double, double, Category) onSubmit;
+  final bool isEditing;
+  final Product? product;
 
-  const ProductCreateForm({super.key, required this.onSubmit});
+  const ProductForm({super.key, required this.onSubmit, this.isEditing = false,this.product});
 
   @override
-  _ProductCreateFormState createState() => _ProductCreateFormState();
+  _ProductFormState createState() => _ProductFormState();
 }
 
-class _ProductCreateFormState extends State<ProductCreateForm> {
-  final _nameController = TextEditingController();
-  final _barcodeController = TextEditingController();
-  final _stockUnitController = TextEditingController();
-  final _priceController = TextEditingController();
-  final _costPriceController = TextEditingController();
+class _ProductFormState extends State<ProductForm> {
+  late TextEditingController _nameController;
+  late TextEditingController _barcodeController;
+  late TextEditingController _stockUnitController;
+  late TextEditingController _priceController;
+  late TextEditingController _costPriceController;
+  late bool isEditing;
 
-  Category _selectedCategory = categoryData[0];
+  late Category _selectedCategory;
+
+  int get indexCategory{
+    return categoryData.indexWhere((element) => element.id == widget.product?.categoria.id);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController = widget.isEditing?TextEditingController(text: widget.product?.nome):TextEditingController();
+    _barcodeController = widget.isEditing?TextEditingController(text: widget.product?.cod_barras):TextEditingController();
+    _stockUnitController = widget.isEditing?TextEditingController(text: widget.product?.unidade.toString()):TextEditingController();
+    _priceController = widget.isEditing?TextEditingController(text: widget.product?.preco.toString()):TextEditingController();
+    _costPriceController = widget.isEditing?TextEditingController(text: widget.product?.preco_custo.toString()):TextEditingController();
+    _selectedCategory = widget.isEditing?categoryData[indexCategory]:categoryData[0];
+    isEditing = widget.isEditing;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -160,8 +180,8 @@ class _ProductCreateFormState extends State<ProductCreateForm> {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Theme.of(context).primaryColor,
                         ),
-                        child: const Text(
-                          "Criar Produto",
+                        child: Text(
+                          isEditing?"Editar Produto":"Criar Produto",
                           style: TextStyle(color: Colors.white),
                         ),
                       ),

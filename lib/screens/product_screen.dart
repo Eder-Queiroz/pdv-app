@@ -3,9 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:pdv_app/components/category_create_form.dart';
 import 'package:pdv_app/components/main_drawer.dart';
+import '../components/product_form.dart';
 import '../components/product_item.dart';
 import '../functions/open_modal.dart';
-import '../components/product_create_form.dart';
 import '../model/category.dart';
 import '../model/product.dart';
 import '../data/category_data.dart';
@@ -55,6 +55,29 @@ class _ProductScreenState extends State<ProductScreen> {
     Navigator.of(context).pop();
   }
 
+  void _onEditProduct(
+      String id,
+      String name,
+      String barcode,
+      int stockUnit,
+      double price,
+      double costPrice,
+      Category category){
+      final index = _productsData.indexWhere((element) => element.id == id);
+      setState(() {
+        _productsData[index] = Product(
+          id: id,
+          nome: name,
+          cod_barras: barcode,
+          preco: price,
+          preco_custo: costPrice,
+          unidade: stockUnit,
+          categoria: category,
+        );
+      });
+      Navigator.of(context).pop();
+  }
+
   Widget _actionButton({
     required IconData icon,
     required String label,
@@ -97,7 +120,7 @@ class _ProductScreenState extends State<ProductScreen> {
                   context: context,
                   onPressed: () => OpenModal.openModal(
                     context,
-                    ProductCreateForm(onSubmit: _onCreateProduct),
+                    ProductForm(onSubmit: _onCreateProduct),
                   ),
                 ),
                 _actionButton(
@@ -117,7 +140,7 @@ class _ProductScreenState extends State<ProductScreen> {
               child: ListView.builder(
                 itemCount: _productsData.length,
                 itemBuilder: (ctx, index) {
-                  return ProductItem(product: _productsData[index]);
+                  return ProductItem(product: _productsData[index],onEditProduct: _onEditProduct,);
                 },
               ),
             )

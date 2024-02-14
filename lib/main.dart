@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pdv_app/screens/product_screen.dart';
+import 'package:pdv_app/screens/sale_screen.dart';
 import 'package:pdv_app/screens/shift_screen.dart';
 import 'package:pdv_app/screens/show_shift_screen.dart';
 import 'package:pdv_app/utils/app_router.dart';
@@ -34,6 +35,7 @@ class _MyAppState extends State<MyApp> {
         AppRouter.home: (_) => ShiftScreen(shiftsData: shiftsData),
         AppRouter.showShift: (_) => const ShowShiftScreen(),
         AppRouter.product: (_) => ProductScreen(productsData: productData),
+        AppRouter.sales: (_) => const SaleScreen(),
       },
     );
   }

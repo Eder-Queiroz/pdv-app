@@ -38,6 +38,12 @@ class MainDrawer extends StatelessWidget {
             "Produtos",
             () => Navigator.of(context).pushReplacementNamed(AppRouter.product),
           ),
+          const Divider(),
+          _createItem(
+            Icons.point_of_sale,
+            "Vendas",
+            () => Navigator.of(context).pushReplacementNamed(AppRouter.sales),
+          ),
         ],
       ),
     );

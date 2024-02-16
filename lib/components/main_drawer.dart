@@ -26,6 +26,7 @@ class MainDrawer extends StatelessWidget {
         children: <Widget>[
           AppBar(
             title: const Text('PDV'),
+            automaticallyImplyLeading: false,
           ),
           _createItem(
             Icons.access_time_filled,
@@ -43,6 +44,12 @@ class MainDrawer extends StatelessWidget {
             Icons.point_of_sale,
             "Vendas",
             () => Navigator.of(context).pushReplacementNamed(AppRouter.sales),
+          ),
+          const Divider(),
+          _createItem(
+            Icons.person,
+            "Usuários",
+            () => Navigator.of(context).pushReplacementNamed(AppRouter.users),
           ),
         ],
       ),

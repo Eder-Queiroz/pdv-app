@@ -24,7 +24,7 @@ class ShowShiftScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Shift Details'),
+        title: Text('Detalhes do Turno'),
       ),
       body: SingleChildScrollView(
         child: Padding(

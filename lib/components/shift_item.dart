@@ -31,6 +31,7 @@ class ShiftItem extends StatelessWidget {
           trailing: SizedBox(
             width: 80,
             child: Card(
+              elevation: 4,
               color: shift.isOpened ? Colors.green : Colors.red,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),

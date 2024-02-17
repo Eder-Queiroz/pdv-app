@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:pdv_app/utils/app_router.dart';
 import '../model/shift.dart';
 
 class ShiftItem extends StatelessWidget {
@@ -43,6 +44,12 @@ class ShiftItem extends StatelessWidget {
               ),
             ),
           ),
+          onTap: () {
+            Navigator.of(context).pushNamed(
+              AppRouter.shiftDetails,
+              arguments: shift,
+            );
+          },
         ),
       ),
     );

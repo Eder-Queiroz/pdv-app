@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pdv_app/pages/shift_page.dart';
+import 'package:pdv_app/pages/shift_details_page.dart';
 import 'package:pdv_app/provider/shift_provider.dart';
 import 'package:pdv_app/utils/app_router.dart';
 import 'package:pdv_app/utils/colors_theme.dart';
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
         ),
         routes: {
           AppRouter.home: (ctx) => const ShiftPage(),
+          AppRouter.shiftDetails: (ctx) => const ShiftDetailsPage(),
         },
       ),
     );

@@ -23,11 +23,11 @@ final List<User> usersData = [
   User(
     id: 1,
     name: 'John Doe',
-    role: Role.manager,
+    role: 'manager',
   ),
   User(
     id: 2,
     name: 'teste',
-    role: Role.employee,
+    role: 'employee',
   ),
 ];

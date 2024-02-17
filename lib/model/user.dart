@@ -6,13 +6,15 @@ enum Role {
 class User {
   int id;
   String name;
-  Role role;
+  late Role role;
 
   User({
     required this.id,
     required this.name,
-    required this.role,
-  });
+    required String role,
+  }) {
+    setRole(role);
+  }
 
   String get roleString {
     switch (role) {
@@ -22,6 +24,19 @@ class User {
         return 'Funcionário';
       default:
         return 'Funcionário';
+    }
+  }
+
+  void setRole(String role) {
+    switch (role) {
+      case 'admin':
+        this.role = Role.manager;
+        break;
+      case 'employee':
+        this.role = Role.employee;
+        break;
+      default:
+        this.role = Role.employee;
     }
   }
 

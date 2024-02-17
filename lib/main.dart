@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pdv_app/pages/login_page.dart';
 import 'package:pdv_app/pages/shift_page.dart';
 import 'package:pdv_app/provider/shift_provider.dart';
+import 'package:pdv_app/provider/user_provider.dart';
 import 'package:pdv_app/utils/app_router.dart';
 import 'package:pdv_app/utils/colors_theme.dart';
 import 'package:provider/provider.dart';
@@ -13,9 +15,10 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (ctx) => ShiftProvider()),
+        ChangeNotifierProvider(create: (ctx) => UserProvider()),
       ],
       child: MaterialApp(
-        title: 'DeliMeals',
+        title: 'PDV',
         theme: ThemeData(
           primaryColor: Colors.green,
           appBarTheme: const AppBarTheme(
@@ -30,10 +33,23 @@ class MyApp extends StatelessWidget {
             labelColor: Colors.pink,
             unselectedLabelColor: Colors.white,
           ),
+          textTheme: const TextTheme(
+            titleLarge: TextStyle(
+              fontSize: 26,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+            labelLarge: TextStyle(
+              fontSize: 18,
+              color: ColorsTheme.primary300,
+            ),
+          ),
         ),
         routes: {
-          AppRouter.home: (ctx) => const ShiftPage(),
+          AppRouter.home: (ctx) => const LoginPage(),
+          AppRouter.shift: (ctx) => const ShiftPage(),
         },
+        debugShowCheckedModeBanner: false,
       ),
     );
   }

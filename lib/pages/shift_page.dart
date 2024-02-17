@@ -15,7 +15,7 @@ class ShiftPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Turnos'),
       ),
-      body: Expanded(
+      body: Container(
         child: shiftProvider.itemsCount > 0
             ? ListView.builder(
                 itemCount: shiftProvider.itemsCount,

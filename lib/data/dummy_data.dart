@@ -11,12 +11,6 @@ final List<Shift> shiftsData = [
     endTime: DateTime.now().add(Duration(days: 1)),
     isOpened: false,
   ),
-  Shift(
-    id: 2,
-    userId: 1,
-    startTime: DateTime.now(),
-    startCash: 135.00,
-  ),
 ];
 
 final List<User> usersData = [

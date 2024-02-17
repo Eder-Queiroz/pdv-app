@@ -20,7 +20,11 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'PDV',
         theme: ThemeData(
-          primaryColor: Colors.green,
+          primaryColor: ColorsTheme.primary500,
+          colorScheme: const ColorScheme.light(
+            primary: ColorsTheme.primary500,
+            secondary: ColorsTheme.secondary500,
+          ),
           appBarTheme: const AppBarTheme(
             backgroundColor: ColorsTheme.primary500,
             centerTitle: true,

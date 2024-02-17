@@ -11,6 +11,12 @@ class ShiftProvider with ChangeNotifier {
 
   int get itemsCount => _items.length;
 
+  int openShiftId(int userId) {
+    final shiftIndex =
+        _items.indexWhere((shift) => shift.userId == userId && shift.isOpened);
+    return shiftIndex >= 0 ? _items[shiftIndex].id : 0;
+  }
+
   void openShift({
     required double startCash,
     required int userId,
@@ -43,5 +49,11 @@ class ShiftProvider with ChangeNotifier {
       );
       notifyListeners();
     }
+  }
+
+  bool isOpenShift(int userId) {
+    final shiftIndex =
+        _items.indexWhere((shift) => shift.userId == userId && shift.isOpened);
+    return shiftIndex >= 0;
   }
 }

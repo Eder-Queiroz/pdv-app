@@ -1,10 +1,62 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pdv_app/provider/user_provider.dart';
+import 'package:pdv_app/utils/app_router.dart';
+import 'package:provider/provider.dart';
 
 import '../utils/colors_theme.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final _formKey = GlobalKey<FormState>();
+
+  final _passwordFocus = FocusNode();
+
+  final _formData = <String, String>{};
+  bool _loading = false;
+
+  void _onSubmit() async {
+    setState(() {
+      _loading = true;
+    });
+
+    try {
+      final isValid = _formKey.currentState?.validate() ?? false;
+
+      if (!isValid) {
+        return;
+      }
+
+      _formKey.currentState?.save();
+
+      final isAutenticated =
+          await Provider.of<UserProvider>(context, listen: false)
+              .login(_formData);
+
+      if (isAutenticated) {
+        Navigator.of(context).pushReplacementNamed(AppRouter.shift);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Usuário ou senha inválidos'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } catch (error) {
+      print(error);
+    } finally {
+      setState(() {
+        _loading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,13 +67,9 @@ class LoginPage extends StatelessWidget {
           Transform.flip(
             flipX: true,
             flipY: true,
-            child: Positioned(
-              top: 0,
-              left: 0,
-              child: SvgPicture.asset(
-                'assets/images/Vector.svg',
-                width: MediaQuery.of(context).size.width,
-              ),
+            child: SvgPicture.asset(
+              'assets/images/Vector.svg',
+              width: MediaQuery.of(context).size.width,
             ),
           ),
           Positioned(
@@ -35,7 +83,7 @@ class LoginPage extends StatelessWidget {
           Center(
             child: SizedBox(
               width: MediaQuery.of(context).size.width * 0.8,
-              height: MediaQuery.of(context).size.height * 0.36,
+              height: MediaQuery.of(context).size.height * 0.4,
               child: Card(
                 color: ColorsTheme.primary500,
                 elevation: 5,
@@ -57,6 +105,7 @@ class LoginPage extends StatelessWidget {
                       ),
                       const SizedBox(height: 12),
                       Form(
+                        key: _formKey,
                         child: Column(
                           children: <Widget>[
                             TextFormField(
@@ -70,6 +119,18 @@ class LoginPage extends StatelessWidget {
                               style: const TextStyle(
                                 color: Colors.white,
                               ),
+                              onFieldSubmitted: (_) {
+                                FocusScope.of(context)
+                                    .requestFocus(_passwordFocus);
+                              },
+                              onSaved: (name) => _formData['name'] = name ?? '',
+                              validator: (name) {
+                                if (name?.isEmpty ?? true) {
+                                  return 'Nome é obrigatório';
+                                }
+
+                                return null;
+                              },
                             ),
                             TextFormField(
                               decoration: const InputDecoration(
@@ -83,19 +144,38 @@ class LoginPage extends StatelessWidget {
                                 color: Colors.white,
                               ),
                               obscureText: true,
+                              focusNode: _passwordFocus,
+                              onSaved: (password) =>
+                                  _formData['password'] = password ?? '',
+                              validator: (password) {
+                                if (password?.isEmpty ?? true) {
+                                  return 'Senha é obrigatória';
+                                }
+
+                                return null;
+                              },
                             ),
                             const SizedBox(height: 20),
                             SizedBox(
                               width: double.infinity,
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  primary: ColorsTheme.secondary500,
+                                  backgroundColor: ColorsTheme.secondary500,
                                 ),
-                                onPressed: () {},
-                                child: const Text(
-                                  'Entrar',
-                                  style: TextStyle(color: Colors.white),
-                                ),
+                                onPressed: () {
+                                  _onSubmit();
+                                },
+                                child: _loading
+                                    ? const CircularProgressIndicator(
+                                        valueColor:
+                                            AlwaysStoppedAnimation<Color>(
+                                          Colors.white,
+                                        ),
+                                      )
+                                    : const Text(
+                                        'Entrar',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
                               ),
                             ),
                           ],

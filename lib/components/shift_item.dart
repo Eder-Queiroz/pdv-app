@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pdv_app/utils/app_router.dart';
+import 'package:pdv_app/utils/colors_theme.dart';
 import '../model/shift.dart';
 
 class ShiftItem extends StatelessWidget {
@@ -11,6 +12,7 @@ class ShiftItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: ColorsTheme.light300,
       margin: const EdgeInsets.symmetric(
         vertical: 5,
         horizontal: 10,
@@ -32,7 +34,9 @@ class ShiftItem extends StatelessWidget {
             width: 80,
             child: Card(
               elevation: 4,
-              color: shift.isOpened ? Colors.green : Colors.red,
+              color: shift.isOpened
+                  ? Theme.of(context).colorScheme.secondary
+                  : Colors.red,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(

@@ -35,15 +35,15 @@ class ShiftProvider with ChangeNotifier {
     _items.clear();
     shifts.forEach((shift) {
       _items.add(Shift(
-        id: int.parse(shift['id'].toString()) as int,
-        userId: int.parse(shift['user_id'].toString()) as int,
+        id: int.parse(shift['id'].toString()),
+        userId: int.parse(shift['user_id'].toString()),
         name: shift['name'] as String,
         startTime: DateTime.parse(shift['start_time'] as String),
         endTime: shift['end_time'] != null
             ? DateTime.parse(shift['end_time'] as String)
             : null,
         startCash: double.parse(shift['start_cash'].toString()),
-        endCash: double.parse(shift['start_cash'].toString()),
+        endCash: double.tryParse(shift['end_cash'].toString()),
         isOpened: shift['is_opened'] == 1,
       ));
     });

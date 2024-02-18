@@ -24,7 +24,6 @@ class ShiftDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Shift shift = ModalRoute.of(context)!.settings.arguments as Shift;
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Detalhes do Turno'),
@@ -65,7 +64,7 @@ class ShiftDetailsPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           _createInfo(
-                              Icons.account_circle, shift.userId.toString()),
+                              Icons.account_circle, shift.name ?? 'Sem nome'),
                           _createInfo(
                             Icons.access_time,
                             'Inicio: ${DateFormat("dd/MM/y").format(shift.startTime)}',

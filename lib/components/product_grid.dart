@@ -14,17 +14,24 @@ class ProductGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = Provider.of<ProductProvider>(context);
     final List<Product> productsItem = provider.items;
-    return GridView.builder(
-      padding: const EdgeInsets.all(10),
-      itemCount: provider.itemsCount,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        childAspectRatio: 3 / 2,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-      ),
-      itemBuilder: (context, index) =>
-          ProductItem(product: productsItem[index]),
-    );
+    return provider.itemsCount > 0
+        ? GridView.builder(
+            padding: const EdgeInsets.all(10),
+            itemCount: provider.itemsCount,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 3 / 2,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+            ),
+            itemBuilder: (context, index) =>
+                ProductItem(product: productsItem[index]),
+          )
+        : Center(
+            child: Text(
+              'Nenhum produto cadastrado!',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+          );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pdv_app/components/category_form.dart';
 import 'package:pdv_app/components/main_drawer.dart';
 import 'package:pdv_app/components/product_grid.dart';
 import 'package:pdv_app/utils/app_router.dart';
@@ -30,6 +31,13 @@ class ProductPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void _openShiftModal() {
+      showModalBottomSheet(
+        context: context,
+        builder: (_) => const CategoryForm(),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Produtos'),
@@ -54,10 +62,11 @@ class ProductPage extends StatelessWidget {
                 },
               ),
               _actionButton(
-                  icon: Icons.category_outlined,
-                  label: 'Adicionar Categoria',
-                  context: context,
-                  onPressed: () => {})
+                icon: Icons.category_outlined,
+                label: 'Adicionar Categoria',
+                context: context,
+                onPressed: _openShiftModal,
+              ),
             ],
           ),
           const SizedBox(

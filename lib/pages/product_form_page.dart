@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:pdv_app/model/category.dart';
+import 'package:pdv_app/provider/category_provider.dart';
+import 'package:pdv_app/provider/supplier_provider.dart';
+import 'package:provider/provider.dart';
+
+import '../provider/product_provider.dart';
 
 class ProductFormPage extends StatefulWidget {
   const ProductFormPage({super.key});
@@ -39,6 +45,31 @@ class _ProductFormPageState extends State<ProductFormPage> {
     }
 
     _formKey.currentState?.save();
+
+    try {
+      final name = _formData['name']!;
+      final barCode = _formData['barCode']!;
+      final price = double.parse(_formData['price']!);
+      final costPrice = double.parse(_formData['costPrice']!);
+      final unit = int.parse(_formData['unit']!);
+      final urlImage = _formData['urlImage'];
+      final categoryId = int.parse(_formData['categoryId']!);
+      final supplierId = int.parse(_formData['supplierId']!);
+
+      Provider.of<ProductProvider>(context, listen: false).createProduct(
+        name: name,
+        barCode: barCode,
+        price: price,
+        costPrice: costPrice,
+        unit: unit,
+        urlImage: urlImage,
+        categoryId: categoryId,
+        supplierId: supplierId,
+      );
+      Navigator.of(context).pop();
+    } catch (error) {
+      print(error);
+    }
   }
 
   @override
@@ -76,6 +107,9 @@ class _ProductFormPageState extends State<ProductFormPage> {
                         onSaved: (name) {
                           _formData['name'] = name ?? '';
                         },
+                      ),
+                      const SizedBox(
+                        height: 10,
                       ),
                       Row(
                         children: <Widget>[
@@ -126,6 +160,9 @@ class _ProductFormPageState extends State<ProductFormPage> {
                             ),
                           ),
                         ],
+                      ),
+                      const SizedBox(
+                        height: 10,
                       ),
                       Row(
                         children: <Widget>[
@@ -182,6 +219,79 @@ class _ProductFormPageState extends State<ProductFormPage> {
                             ),
                           ),
                         ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: Consumer<CategoryProvider>(
+                              builder: (context, value, child) =>
+                                  DropdownButtonFormField(
+                                decoration: const InputDecoration(
+                                    labelText: 'Categoria'),
+                                items: value.items.map((Category category) {
+                                  return DropdownMenuItem(
+                                    value: category.id,
+                                    child: Text(category.name),
+                                  );
+                                }).toList(),
+                                validator: (categoryId) {
+                                  if (categoryId == null) {
+                                    return 'Informe uma categoria válida!';
+                                  }
+
+                                  return null;
+                                },
+                                onChanged: (categoryId) {
+                                  _formData['categoryId'] =
+                                      categoryId.toString();
+                                },
+                                onSaved: (categoryId) {
+                                  _formData['categoryId'] =
+                                      categoryId.toString();
+                                },
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: Consumer<SupplierProvider>(
+                              builder: (context, value, child) =>
+                                  DropdownButtonFormField(
+                                decoration: const InputDecoration(
+                                    labelText: 'Fornecedor'),
+                                items: value.items.map((supplier) {
+                                  return DropdownMenuItem(
+                                    value: supplier.id,
+                                    child: Text(supplier.name),
+                                  );
+                                }).toList(),
+                                validator: (supplierId) {
+                                  if (supplierId == null) {
+                                    return 'Informe um fornecedor válido!';
+                                  }
+
+                                  return null;
+                                },
+                                onChanged: (supplierId) {
+                                  _formData['supplierId'] =
+                                      supplierId.toString();
+                                },
+                                onSaved: (supplierId) {
+                                  _formData['supplierId'] =
+                                      supplierId.toString();
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
                       ),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.end,

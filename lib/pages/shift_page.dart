@@ -6,7 +6,9 @@ import 'package:pdv_app/provider/user_provider.dart';
 import 'package:pdv_app/utils/colors_theme.dart';
 import 'package:provider/provider.dart';
 
+import '../components/main_drawer.dart';
 import '../components/shift_form.dart';
+import '../utils/app_router.dart';
 
 class ShiftPage extends StatelessWidget {
   const ShiftPage({super.key});
@@ -45,6 +47,7 @@ class ShiftPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Turnos'),
       ),
+      drawer: const MainDrawer(router: AppRouter.shift),
       backgroundColor: ColorsTheme.primary800,
       body: Container(
         child: shiftProvider.itemsCount > 0

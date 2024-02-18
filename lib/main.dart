@@ -26,9 +26,16 @@ class MyApp extends StatelessWidget {
             primary: ColorsTheme.primary500,
             secondary: ColorsTheme.secondary500,
           ),
+          drawerTheme: const DrawerThemeData(
+            backgroundColor: ColorsTheme.primary800,
+            elevation: 10,
+          ),
           appBarTheme: const AppBarTheme(
             backgroundColor: ColorsTheme.primary500,
             centerTitle: true,
+            iconTheme: IconThemeData(
+              color: Colors.white,
+            ),
             titleTextStyle: TextStyle(
               fontSize: 26,
               color: Colors.white,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pdv_app/model/supplier.dart';
+import 'package:pdv_app/utils/app_router.dart';
 
 class SupplierItem extends StatelessWidget {
   final Supplier supplier;
@@ -18,7 +19,12 @@ class SupplierItem extends StatelessWidget {
         subtitle: Text(supplier.getOneContact ?? 'Sem contato'),
         trailing: IconButton(
           icon: const Icon(Icons.edit),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pushNamed(
+              AppRouter.supplierForm,
+              arguments: supplier,
+            );
+          },
         ),
       ),
     );

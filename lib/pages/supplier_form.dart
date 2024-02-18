@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../model/supplier.dart';
 import '../provider/supplier_provider.dart';
 import '../utils/colors_theme.dart';
 
@@ -15,7 +16,7 @@ class _SupplierFormState extends State<SupplierForm> {
   final _formKey = GlobalKey<FormState>();
   final _formData = <String, String>{};
 
-  _onSubmit() {
+  _onSubmit(bool isEdit, int? id) {
     final isValid = _formKey.currentState?.validate() ?? false;
 
     if (!isValid) {
@@ -29,8 +30,12 @@ class _SupplierFormState extends State<SupplierForm> {
       final email = _formData['email'];
       final phone = _formData['phone'];
 
-      Provider.of<SupplierProvider>(context, listen: false)
-          .addSupplier(name, email, phone);
+      isEdit
+          ? Provider.of<SupplierProvider>(context, listen: false)
+              .updateSupplier(id!, name, email, phone)
+          : Provider.of<SupplierProvider>(context, listen: false)
+              .addSupplier(name, email, phone);
+
       Navigator.of(context).pop();
     } catch (error) {
       print(error);
@@ -39,6 +44,8 @@ class _SupplierFormState extends State<SupplierForm> {
 
   @override
   Widget build(BuildContext context) {
+    final supplier = ModalRoute.of(context)?.settings.arguments as Supplier?;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Formulário de Fornecedor'),
@@ -56,6 +63,7 @@ class _SupplierFormState extends State<SupplierForm> {
                   children: [
                     TextFormField(
                       decoration: const InputDecoration(labelText: 'Nome'),
+                      initialValue: supplier?.name,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Nome é obrigatório';
@@ -72,6 +80,7 @@ class _SupplierFormState extends State<SupplierForm> {
                           child: TextFormField(
                             decoration:
                                 const InputDecoration(labelText: 'Email'),
+                            initialValue: supplier?.email,
                             onSaved: (email) {
                               _formData['email'] = email ?? '';
                             },
@@ -84,6 +93,7 @@ class _SupplierFormState extends State<SupplierForm> {
                           child: TextFormField(
                             decoration:
                                 const InputDecoration(labelText: 'Telefone'),
+                            initialValue: supplier?.phone,
                             onSaved: (phone) {
                               _formData['phone'] = phone ?? '';
                             },
@@ -98,7 +108,8 @@ class _SupplierFormState extends State<SupplierForm> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: ColorsTheme.secondary500,
                       ),
-                      onPressed: _onSubmit,
+                      onPressed: () =>
+                          _onSubmit(supplier != null, supplier?.id),
                       child: const Text(
                         'Salvar',
                         style: TextStyle(color: Colors.white),

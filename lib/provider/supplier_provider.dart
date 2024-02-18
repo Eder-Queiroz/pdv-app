@@ -57,4 +57,22 @@ class SupplierProvider with ChangeNotifier {
 
     await fetchSuppliers();
   }
+
+  Future<void> updateSupplier(
+      int id, String name, String? email, String? phone) async {
+    db = await DbUtil.instance.database;
+
+    await db.update(
+      'suppliers',
+      {
+        'name': name,
+        'email': email,
+        'phone': phone,
+      },
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+
+    await fetchSuppliers();
+  }
 }

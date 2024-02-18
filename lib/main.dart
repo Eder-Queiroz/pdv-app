@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:pdv_app/pages/login_page.dart';
 import 'package:pdv_app/pages/shift_page.dart';
 import 'package:pdv_app/pages/shift_details_page.dart';
+import 'package:pdv_app/pages/supplier_page.dart';
 import 'package:pdv_app/provider/shift_provider.dart';
+import 'package:pdv_app/provider/supplier_provider.dart';
 import 'package:pdv_app/provider/user_provider.dart';
 import 'package:pdv_app/utils/app_router.dart';
 import 'package:pdv_app/utils/colors_theme.dart';
@@ -15,8 +17,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (ctx) => ShiftProvider()),
-        ChangeNotifierProvider(create: (ctx) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => ShiftProvider()),
+        ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => SupplierProvider())
       ],
       child: MaterialApp(
         title: 'PDV',
@@ -26,6 +29,7 @@ class MyApp extends StatelessWidget {
             primary: ColorsTheme.primary500,
             secondary: ColorsTheme.secondary500,
           ),
+          scaffoldBackgroundColor: ColorsTheme.primary800,
           drawerTheme: const DrawerThemeData(
             backgroundColor: ColorsTheme.primary800,
             elevation: 10,
@@ -58,9 +62,10 @@ class MyApp extends StatelessWidget {
           ),
         ),
         routes: {
-          AppRouter.shiftDetails: (ctx) => const ShiftDetailsPage(),
-          AppRouter.home: (ctx) => const LoginPage(),
-          AppRouter.shift: (ctx) => const ShiftPage(),
+          AppRouter.shiftDetails: (_) => const ShiftDetailsPage(),
+          AppRouter.home: (_) => const LoginPage(),
+          AppRouter.shift: (_) => const ShiftPage(),
+          AppRouter.supplier: (_) => const SupplierPage(),
         },
         debugShowCheckedModeBanner: false,
       ),

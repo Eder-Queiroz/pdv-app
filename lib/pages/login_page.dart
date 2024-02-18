@@ -61,7 +61,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorsTheme.primary800,
       body: Stack(
         children: <Widget>[
           Transform.flip(

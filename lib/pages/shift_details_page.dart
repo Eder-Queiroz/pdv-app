@@ -26,9 +26,8 @@ class ShiftDetailsPage extends StatelessWidget {
     final Shift shift = ModalRoute.of(context)!.settings.arguments as Shift;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Detalhes do Turno'),
+        title: const Text('Detalhes do Turno'),
       ),
-      backgroundColor: ColorsTheme.primary800,
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
         child: Stack(children: <Widget>[
@@ -50,7 +49,7 @@ class ShiftDetailsPage extends StatelessWidget {
           ),
           Center(
             child: Container(
-              margin: EdgeInsets.only(bottom: 140),
+              margin: const EdgeInsets.only(bottom: 140),
               height: MediaQuery.of(context).size.height * 0.4,
               child: Padding(
                 padding: const EdgeInsets.all(16.0),

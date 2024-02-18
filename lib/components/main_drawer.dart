@@ -44,6 +44,7 @@ class MainDrawer extends StatelessWidget {
                   color: Colors.white,
                 ),
               ),
+              onTap: onTap,
             ),
           );
   }

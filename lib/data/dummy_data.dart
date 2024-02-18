@@ -1,4 +1,5 @@
 import '../model/shift.dart';
+import '../model/supplier.dart';
 import '../model/user.dart';
 
 final List<Shift> shiftsData = [
@@ -23,5 +24,25 @@ final List<User> usersData = [
     id: 3,
     name: 'teste',
     role: 'employee',
+  ),
+];
+
+final List<Supplier> supplierData = [
+  Supplier(
+    id: 1,
+    name: 'Supplier 1',
+    email: 'teste@mail.com',
+    phone: '(34) 99999-9999',
+  ),
+  Supplier(
+    id: 2,
+    name: 'Supplier 2',
+    email: 'teste2@gmail.com',
+    phone: '(34) 99999-9999',
+  ),
+  Supplier(
+    id: 2,
+    name: 'Supplier 3',
+    email: 'teste3@gmail.com',
   ),
 ];

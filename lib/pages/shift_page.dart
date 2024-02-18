@@ -15,12 +15,12 @@ class ShiftPage extends StatelessWidget {
     final UserProvider userProvider = Provider.of(context);
     final userId = userProvider.user.id;
     final items = shiftProvider.items;
-    final isShiftOpen = shiftProvider.isOpenShift(userId);
+    final isShiftOpen = shiftProvider.isOpenShift(userId!);
 
     void _onSubmit(double value) {
       if (isShiftOpen) {
         shiftProvider.endShift(
-            shiftId: shiftProvider.openShiftId(userId), endCash: value);
+            shiftId: shiftProvider.openShiftId(userId)!, endCash: value);
       } else {
         shiftProvider.openShift(startCash: value, userId: userId);
       }

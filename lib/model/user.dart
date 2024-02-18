@@ -4,12 +4,12 @@ enum Role {
 }
 
 class User {
-  int id;
+  int? id;
   String name;
   late Role role;
 
   User({
-    required this.id,
+    this.id,
     required this.name,
     required String role,
   }) {

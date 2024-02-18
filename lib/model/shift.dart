@@ -1,6 +1,7 @@
 class Shift {
-  final int id;
+  final int? id;
   final int userId;
+  final String? name;
   final DateTime startTime;
   final DateTime? endTime;
   final double startCash;
@@ -8,8 +9,9 @@ class Shift {
   final bool isOpened;
 
   Shift({
-    required this.id,
+    this.id,
     required this.userId,
+    this.name,
     required this.startTime,
     this.endTime,
     required this.startCash,

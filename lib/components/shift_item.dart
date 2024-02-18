@@ -20,7 +20,7 @@ class ShiftItem extends StatelessWidget {
         padding: const EdgeInsets.all(10.0),
         child: ListTile(
           title: Text(
-            shift.userId.toString(),
+            shift.name!,
             style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,

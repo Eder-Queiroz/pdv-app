@@ -14,13 +14,13 @@ class DbUtil {
 
   _initDatabase() async {
     return await sql.openDatabase(
-      path.join(await sql.getDatabasesPath(), 'places.db'),
+      path.join(await sql.getDatabasesPath(), 'pdv_database.db'),
       onCreate: _onCreate,
       version: 1,
     );
   }
 
-  _onCreate(db, version) async {
+  _onCreate(Database db, version) async {
     await db.execute(_users);
     await db.execute(_categories);
     await db.execute(_suppliers);
@@ -30,11 +30,12 @@ class DbUtil {
     await db.execute(_takers);
     await db.execute(_sales);
     await db.execute(_changeds);
+    await db.execute(_insertUser);
   }
 
   String get _users => '''
     CREATE TABLE IF NOT EXISTS users (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        id INTEGER PRIMARY KEY,
         name varchar(255) NOT NULL,
         password varchar(255) NOT NULL,
         role varchar(255) NOT NULL
@@ -43,14 +44,14 @@ class DbUtil {
 
   String get _categories => '''
   CREATE TABLE IF NOT EXISTS categories (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        id INTEGER PRIMARY KEY,
         name varchar(255) NOT NULL
   );
   ''';
 
   String get _suppliers => '''
   CREATE TABLE if NOT EXISTS suppliers(
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        id INTEGER PRIMARY KEY,
         name varchar(255) NOT NULL,
         email varchar(255),
         phone varchar(255)
@@ -59,14 +60,14 @@ class DbUtil {
 
   String get _products => '''
   CREATE TABLE IF NOT EXISTS products (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        id INTEGER PRIMARY KEY,
         bar_code varchar(255) NOT NULL,
         name varchar(255) NOT NULL,
-        price numeric(10, 2) NOT NULL,
-        cost_price numeric(10, 2) NOT NULL,
+        price TEXT NOT NULL,
+        cost_price TEXT NOT NULL,
         unit INTEGER NOT NULL,
-        category_id INTEGER NOT NULL,
-        supplier_id INTEGER NOT NULL,
+        category_id TEXT NOT NULL,
+        supplier_id TEXT NOT NULL,
         CONSTRAINT fk_category_id FOREIGN KEY (category_id) REFERENCES categories (id),
         CONSTRAINT fk_supplier_id FOREIGN KEY (supplier_id) REFERENCES suppliers (id)
   );
@@ -74,8 +75,8 @@ class DbUtil {
 
   String get _purchases => '''
   CREATE TABLE  IF NOT EXISTS purchases(
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        price numeric(10, 2) NOT NULL,
+        id INTEGER PRIMARY KEY,
+        price TEXT NOT NULL,
         amount INTEGER NOT NULL,
         product_id INTEGER NOT NULL,
         purchase_date TIMESTAMP NOT NULL,
@@ -85,12 +86,12 @@ class DbUtil {
 
   String get _shifts => '''
   CREATE TABLE IF NOT EXISTS shifts(
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        user_id INTEGER NOT NULL,
+        id INTEGER PRIMARY KEY,
+        user_id TEXT NOT NULL,
         start_time TIMESTAMP NOT NULL,
         end_time TIMESTAMP,
-        start_cash numeric(10, 2) NOT NULL,
-        end_cash numeric(10, 2),
+        start_cash TEXT NOT NULL,
+        end_cash TEXT,
         is_opened BOOLEAN NOT NULL,
         CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users (id)
   );
@@ -98,7 +99,7 @@ class DbUtil {
 
   String get _takers => '''
   CREATE TABLE IF NOT EXISTS takers(
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        id INTEGER PRIMARY KEY,
         name varchar(255) NOT NULL,
         total_price numeric(10,2) NOT NULL,
         phone varchar(255)
@@ -107,10 +108,10 @@ class DbUtil {
 
   String get _sales => '''
   CREATE TABLE IF NOT EXISTS sales(
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        shift_id INTEGER NOT NULL,
-        product_id INTEGER NOT NULL,
-        taker_id INTEGER,
+        id INTEGER PRIMARY KEY,
+        shift_id TEXT NOT NULL,
+        product_id TEXT NOT NULL,
+        taker_id TEXT,
         quantity INTEGER NOT NULL,
         payment_method VARCHAR(255) NOT NULL,
         sale_time TIMESTAMP NOT NULL,
@@ -122,11 +123,15 @@ class DbUtil {
 
   String get _changeds => '''
   CREATE TABLE IF NOT EXISTS changeds(
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        shift_id INTEGER NOT NULL,
-        value numeric(10, 2) NOT NULL,
+        id INTEGER PRIMARY KEY,
+        shift_id TEXT NOT NULL,
+        value TEXT NOT NULL,
         changed_time TIMESTAMP NOT NULL,
         CONSTRAINT fk_shift_id FOREIGN KEY (shift_id) REFERENCES shifts (id)
   );
+  ''';
+
+  String get _insertUser => '''
+  INSERT INTO users (name, password, role) VALUES ('admin', 'admin', 'manager');
   ''';
 }

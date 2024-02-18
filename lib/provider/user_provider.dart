@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:pdv_app/data/dummy_data.dart';
-import 'package:pdv_app/utils/app_router.dart';
 import 'package:pdv_app/utils/db_util.dart';
 import 'package:sqflite/sqflite.dart';
 

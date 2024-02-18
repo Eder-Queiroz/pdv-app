@@ -4,7 +4,7 @@ import '../model/user.dart';
 final List<Shift> shiftsData = [
   Shift(
     id: 1,
-    userId: 1,
+    userId: 2,
     startTime: DateTime.now(),
     startCash: 100.00,
     endCash: 135.00,
@@ -15,12 +15,12 @@ final List<Shift> shiftsData = [
 
 final List<User> usersData = [
   User(
-    id: 1,
+    id: 2,
     name: 'John Doe',
     role: 'manager',
   ),
   User(
-    id: 2,
+    id: 3,
     name: 'teste',
     role: 'employee',
   ),

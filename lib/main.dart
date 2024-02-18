@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:pdv_app/pages/login_page.dart';
+import 'package:pdv_app/pages/product_form_page.dart';
 import 'package:pdv_app/pages/product_page.dart';
 import 'package:pdv_app/pages/shift_page.dart';
 import 'package:pdv_app/pages/shift_details_page.dart';
-import 'package:pdv_app/pages/supplier_form.dart';
+import 'package:pdv_app/pages/supplier_form_page.dart';
 import 'package:pdv_app/pages/supplier_page.dart';
 import 'package:pdv_app/provider/category_provider.dart';
 import 'package:pdv_app/provider/product_provider.dart';
@@ -72,8 +73,9 @@ class MyApp extends StatelessWidget {
           AppRouter.home: (_) => const LoginPage(),
           AppRouter.shift: (_) => const ShiftPage(),
           AppRouter.supplier: (_) => const SupplierPage(),
-          AppRouter.supplierForm: (_) => const SupplierForm(),
+          AppRouter.supplierForm: (_) => const SupplierFormPage(),
           AppRouter.product: (_) => const ProductPage(),
+          AppRouter.productForm: (_) => const ProductFormPage(),
         },
         debugShowCheckedModeBanner: false,
       ),

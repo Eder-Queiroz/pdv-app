@@ -5,14 +5,14 @@ import '../model/supplier.dart';
 import '../provider/supplier_provider.dart';
 import '../utils/colors_theme.dart';
 
-class SupplierForm extends StatefulWidget {
-  const SupplierForm({super.key});
+class SupplierFormPage extends StatefulWidget {
+  const SupplierFormPage({super.key});
 
   @override
-  _SupplierFormState createState() => _SupplierFormState();
+  _SupplierFormPageState createState() => _SupplierFormPageState();
 }
 
-class _SupplierFormState extends State<SupplierForm> {
+class _SupplierFormPageState extends State<SupplierFormPage> {
   final _formKey = GlobalKey<FormState>();
   final _formData = <String, String>{};
 

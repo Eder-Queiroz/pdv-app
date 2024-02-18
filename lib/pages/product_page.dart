@@ -46,10 +46,13 @@ class ProductPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               _actionButton(
-                  icon: Icons.add,
-                  label: 'Adicionar Produto',
-                  context: context,
-                  onPressed: () => {}),
+                icon: Icons.add,
+                label: 'Adicionar Produto',
+                context: context,
+                onPressed: () => {
+                  Navigator.of(context).pushNamed(AppRouter.productForm),
+                },
+              ),
               _actionButton(
                   icon: Icons.category_outlined,
                   label: 'Adicionar Categoria',

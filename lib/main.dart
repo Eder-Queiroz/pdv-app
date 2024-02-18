@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pdv_app/pages/login_page.dart';
 import 'package:pdv_app/pages/shift_page.dart';
 import 'package:pdv_app/pages/shift_details_page.dart';
+import 'package:pdv_app/pages/supplier_form.dart';
 import 'package:pdv_app/pages/supplier_page.dart';
 import 'package:pdv_app/provider/shift_provider.dart';
 import 'package:pdv_app/provider/supplier_provider.dart';
@@ -66,6 +67,7 @@ class MyApp extends StatelessWidget {
           AppRouter.home: (_) => const LoginPage(),
           AppRouter.shift: (_) => const ShiftPage(),
           AppRouter.supplier: (_) => const SupplierPage(),
+          AppRouter.supplierForm: (_) => const SupplierForm(),
         },
         debugShowCheckedModeBanner: false,
       ),

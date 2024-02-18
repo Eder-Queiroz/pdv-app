@@ -16,6 +16,14 @@ class SupplierPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Fornecedores'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () {
+              Navigator.of(context).pushNamed(AppRouter.supplierForm);
+            },
+          ),
+        ],
       ),
       drawer: const MainDrawer(router: AppRouter.supplier),
       body: Container(
@@ -26,8 +34,11 @@ class SupplierPage extends StatelessWidget {
                     SupplierItem(supplier: supplierItems[i]),
                 padding: const EdgeInsets.all(8),
               )
-            : const Center(
-                child: Text('Nenhum turno cadastrado!'),
+            : Center(
+                child: Text(
+                  'Nenhum fornecedor cadastrado!',
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
               ),
       ),
     );

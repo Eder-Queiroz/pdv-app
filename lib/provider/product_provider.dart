@@ -64,4 +64,34 @@ class ProductProvider with ChangeNotifier {
     );
     loadProducts();
   }
+
+  Future<void> updateProduct({
+    required int id,
+    required String name,
+    required String barCode,
+    required double price,
+    required double costPrice,
+    required int unit,
+    required String? urlImage,
+    required int categoryId,
+    required int supplierId,
+  }) async {
+    db = await DbUtil.instance.database;
+    await db.update(
+      "products",
+      {
+        "name": name,
+        "bar_code": barCode,
+        "price": price.toStringAsFixed(2),
+        "cost_price": costPrice.toStringAsFixed(2),
+        "unit": unit,
+        "url_image": urlImage,
+        "category_id": categoryId,
+        "supplier_id": supplierId,
+      },
+      where: "id = ?",
+      whereArgs: [id],
+    );
+    loadProducts();
+  }
 }

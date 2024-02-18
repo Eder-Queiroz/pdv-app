@@ -4,6 +4,7 @@ import 'package:pdv_app/provider/category_provider.dart';
 import 'package:pdv_app/provider/supplier_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../model/product.dart';
 import '../provider/product_provider.dart';
 
 class ProductFormPage extends StatefulWidget {
@@ -17,7 +18,6 @@ class _ProductFormPageState extends State<ProductFormPage> {
   final _formKey = GlobalKey<FormState>();
   final _formData = <String, String>{};
   final _imageUrlFocus = FocusNode();
-  final _imageUrlController = TextEditingController();
 
   @override
   void initState() {
@@ -37,7 +37,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
     setState(() {});
   }
 
-  _onSubmit() {
+  _onSubmit(bool isUpdate, int? id) {
     final isValid = _formKey.currentState?.validate() ?? false;
 
     if (!isValid) {
@@ -56,16 +56,29 @@ class _ProductFormPageState extends State<ProductFormPage> {
       final categoryId = int.parse(_formData['categoryId']!);
       final supplierId = int.parse(_formData['supplierId']!);
 
-      Provider.of<ProductProvider>(context, listen: false).createProduct(
-        name: name,
-        barCode: barCode,
-        price: price,
-        costPrice: costPrice,
-        unit: unit,
-        urlImage: urlImage,
-        categoryId: categoryId,
-        supplierId: supplierId,
-      );
+      isUpdate
+          ? Provider.of<ProductProvider>(context, listen: false).updateProduct(
+              id: id!,
+              name: name,
+              barCode: barCode,
+              price: price,
+              costPrice: costPrice,
+              unit: unit,
+              urlImage: urlImage,
+              categoryId: categoryId,
+              supplierId: supplierId,
+            )
+          : Provider.of<ProductProvider>(context, listen: false).createProduct(
+              name: name,
+              barCode: barCode,
+              price: price,
+              costPrice: costPrice,
+              unit: unit,
+              urlImage: urlImage,
+              categoryId: categoryId,
+              supplierId: supplierId,
+            );
+
       Navigator.of(context).pop();
     } catch (error) {
       print(error);
@@ -74,6 +87,10 @@ class _ProductFormPageState extends State<ProductFormPage> {
 
   @override
   Widget build(BuildContext context) {
+    final product = ModalRoute.of(context)?.settings.arguments as Product?;
+
+    final imageUrlController = TextEditingController(text: product?.urlImage);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Formulário de Produto'),
@@ -93,6 +110,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
                       TextFormField(
                         decoration: const InputDecoration(labelText: 'Nome'),
                         textInputAction: TextInputAction.next,
+                        initialValue: product?.name,
                         validator: (name) {
                           if (name!.isEmpty) {
                             return 'Informe um nome válido!';
@@ -118,6 +136,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
                               decoration: const InputDecoration(
                                   labelText: 'Codigo de Barras'),
                               textInputAction: TextInputAction.next,
+                              initialValue: product?.barCode,
                               validator: (barCode) {
                                 if (barCode!.isEmpty) {
                                   return 'Informe um código de barras válido!';
@@ -142,6 +161,9 @@ class _ProductFormPageState extends State<ProductFormPage> {
                               decoration:
                                   const InputDecoration(labelText: 'Estoque'),
                               textInputAction: TextInputAction.next,
+                              keyboardType:
+                                  const TextInputType.numberWithOptions(),
+                              initialValue: product?.unit.toString(),
                               validator: (unit) {
                                 if (unit!.isEmpty ||
                                     int.tryParse(unit) == null) {
@@ -175,6 +197,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
                                   const TextInputType.numberWithOptions(
                                 decimal: true,
                               ),
+                              initialValue: product?.price.toStringAsFixed(2),
                               validator: (price) {
                                 if (price!.isEmpty ||
                                     double.tryParse(price) == null) {
@@ -199,8 +222,13 @@ class _ProductFormPageState extends State<ProductFormPage> {
                             child: TextFormField(
                               decoration: const InputDecoration(
                                   labelText: 'Preço de Custo'),
-                              keyboardType: TextInputType.number,
+                              keyboardType:
+                                  const TextInputType.numberWithOptions(
+                                decimal: true,
+                              ),
                               textInputAction: TextInputAction.next,
+                              initialValue:
+                                  product?.costPrice.toStringAsFixed(2),
                               validator: (costPrice) {
                                 if (costPrice!.isEmpty ||
                                     double.tryParse(costPrice) == null) {
@@ -229,6 +257,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
                             child: Consumer<CategoryProvider>(
                               builder: (context, value, child) =>
                                   DropdownButtonFormField(
+                                value: product?.categoryId,
                                 decoration: const InputDecoration(
                                     labelText: 'Categoria'),
                                 items: value.items.map((Category category) {
@@ -262,6 +291,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
                             child: Consumer<SupplierProvider>(
                               builder: (context, value, child) =>
                                   DropdownButtonFormField(
+                                value: product?.supplierId,
                                 decoration: const InputDecoration(
                                     labelText: 'Fornecedor'),
                                 items: value.items.map((supplier) {
@@ -301,9 +331,10 @@ class _ProductFormPageState extends State<ProductFormPage> {
                               decoration: const InputDecoration(
                                   labelText: 'URL da Imagem'),
                               keyboardType: TextInputType.url,
+                              // initialValue: product?.urlImage,
                               textInputAction: TextInputAction.done,
                               focusNode: _imageUrlFocus,
-                              controller: _imageUrlController,
+                              controller: imageUrlController,
                               onSaved: (urlImage) {
                                 _formData['urlImage'] = urlImage ?? '';
                               },
@@ -322,12 +353,12 @@ class _ProductFormPageState extends State<ProductFormPage> {
                                 color: Colors.grey,
                               ),
                             ),
-                            child: _imageUrlController.text.isEmpty
+                            child: imageUrlController.text.isEmpty
                                 ? const Center(child: Text('Informe a Url'))
                                 : FittedBox(
                                     fit: BoxFit.cover,
                                     child:
-                                        Image.network(_imageUrlController.text),
+                                        Image.network(imageUrlController.text),
                                   ),
                           ),
                         ],
@@ -341,8 +372,13 @@ class _ProductFormPageState extends State<ProductFormPage> {
                               Theme.of(context).colorScheme.secondary,
                           elevation: 5,
                         ),
-                        onPressed: _onSubmit,
-                        child: const Text('Salvar'),
+                        onPressed: () => _onSubmit(
+                          product != null,
+                          product?.id,
+                        ),
+                        child: Text(product == null
+                            ? 'Cadastrar Produto'
+                            : 'Atualizar Produto'),
                       ),
                     ],
                   ),

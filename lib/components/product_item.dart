@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../model/product.dart';
+import '../utils/app_router.dart';
 
 class ProductItem extends StatelessWidget {
   final Product product;
@@ -38,7 +39,12 @@ class ProductItem extends StatelessWidget {
           ),
         ),
         child: GestureDetector(
-          onTap: () {},
+          onTap: () {
+            Navigator.of(context).pushNamed(
+              AppRouter.productForm,
+              arguments: product,
+            );
+          },
           child: Image.network(
             product.urlImage ??
                 "https://dpteurope-18521.kxcdn.com/emipro_theme_base/static/src/img/product_slider/product-not-found.jpg",

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:pdv_app/pages/login_page.dart';
+import 'package:pdv_app/pages/product_page.dart';
 import 'package:pdv_app/pages/shift_page.dart';
 import 'package:pdv_app/pages/shift_details_page.dart';
 import 'package:pdv_app/pages/supplier_form.dart';
 import 'package:pdv_app/pages/supplier_page.dart';
+import 'package:pdv_app/provider/category_provider.dart';
+import 'package:pdv_app/provider/product_provider.dart';
 import 'package:pdv_app/provider/shift_provider.dart';
 import 'package:pdv_app/provider/supplier_provider.dart';
 import 'package:pdv_app/provider/user_provider.dart';
@@ -20,7 +23,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => ShiftProvider()),
         ChangeNotifierProvider(create: (_) => UserProvider()),
-        ChangeNotifierProvider(create: (_) => SupplierProvider())
+        ChangeNotifierProvider(create: (_) => SupplierProvider()),
+        ChangeNotifierProvider(create: (_) => CategoryProvider()),
+        ChangeNotifierProvider(create: (_) => ProductProvider())
       ],
       child: MaterialApp(
         title: 'PDV',
@@ -68,6 +73,7 @@ class MyApp extends StatelessWidget {
           AppRouter.shift: (_) => const ShiftPage(),
           AppRouter.supplier: (_) => const SupplierPage(),
           AppRouter.supplierForm: (_) => const SupplierForm(),
+          AppRouter.product: (_) => const ProductPage(),
         },
         debugShowCheckedModeBanner: false,
       ),

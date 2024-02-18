@@ -66,6 +66,7 @@ class DbUtil {
         price TEXT NOT NULL,
         cost_price TEXT NOT NULL,
         unit INTEGER NOT NULL,
+        url_image TEXT,
         category_id TEXT NOT NULL,
         supplier_id TEXT NOT NULL,
         CONSTRAINT fk_category_id FOREIGN KEY (category_id) REFERENCES categories (id),

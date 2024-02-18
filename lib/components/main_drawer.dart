@@ -85,6 +85,14 @@ class MainDrawer extends StatelessWidget {
             },
             router == AppRouter.supplier,
           ),
+          _createItem(
+            Icons.shopping_cart,
+            "Produtos",
+            () {
+              Navigator.of(context).pushReplacementNamed(AppRouter.product);
+            },
+            router == AppRouter.product,
+          ),
           _createItem(Icons.exit_to_app, 'Sair', () {}, false),
         ],
       ),

@@ -27,9 +27,20 @@ class User {
     }
   }
 
+  String get roleValue {
+    switch (role) {
+      case Role.manager:
+        return 'manager';
+      case Role.employee:
+        return 'employee';
+      default:
+        return 'employee';
+    }
+  }
+
   void setRole(String role) {
     switch (role) {
-      case 'admin':
+      case 'manager':
         this.role = Role.manager;
         break;
       case 'employee':

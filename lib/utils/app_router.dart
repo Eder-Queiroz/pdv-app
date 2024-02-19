@@ -6,4 +6,5 @@ class AppRouter {
   static const String supplierForm = '/supplier/form';
   static const String product = '/product';
   static const String productForm = '/product/form';
+  static const String user = '/user';
 }

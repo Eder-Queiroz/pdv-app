@@ -101,6 +101,14 @@ class MainDrawer extends StatelessWidget {
             },
             router == AppRouter.user,
           ),
+          _createItem(
+            Icons.person,
+            "Tomadores",
+            () {
+              Navigator.of(context).pushReplacementNamed(AppRouter.taker);
+            },
+            router == AppRouter.taker,
+          ),
           _createItem(Icons.exit_to_app, 'Sair', () {}, false),
         ],
       ),

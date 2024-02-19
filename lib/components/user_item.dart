@@ -6,18 +6,16 @@ import '../model/user.dart';
 class UserItem extends StatelessWidget {
   final User user;
   final bool isManager;
+  final Function(User?) openShiftModal;
 
-  const UserItem({super.key, required this.user, required this.isManager});
+  const UserItem(
+      {super.key,
+      required this.user,
+      required this.isManager,
+      required this.openShiftModal});
 
   @override
   Widget build(BuildContext context) {
-    void openShiftModal() {
-      showModalBottomSheet(
-        context: context,
-        builder: (_) => UserForm(user: user),
-      );
-    }
-
     return Card(
       child: ListTile(
         leading: const CircleAvatar(
@@ -30,7 +28,7 @@ class UserItem extends StatelessWidget {
         trailing: isManager
             ? IconButton(
                 icon: const Icon(Icons.edit),
-                onPressed: openShiftModal,
+                onPressed: () => openShiftModal(user),
               )
             : null,
       ),

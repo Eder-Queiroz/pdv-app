@@ -2,6 +2,7 @@ import '../model/category.dart';
 import '../model/product.dart';
 import '../model/shift.dart';
 import '../model/supplier.dart';
+import '../model/taker.dart';
 import '../model/user.dart';
 
 final List<Shift> shiftsData = [
@@ -110,5 +111,25 @@ final List<Product> productsData = [
     unit: 1,
     categoryId: 3,
     supplierId: 3,
+  ),
+];
+
+final List<Taker> takersData = [
+  Taker(
+    id: 1,
+    name: 'Taker 1',
+    total_price: 10.00,
+    phone: '(34) 99999-9999',
+  ),
+  Taker(
+    id: 2,
+    name: 'Taker 2',
+    total_price: 10.00,
+    phone: '(34) 99999-9999',
+  ),
+  Taker(
+    id: 3,
+    name: 'Taker 3',
+    phone: '(34) 99999-9999',
   ),
 ];

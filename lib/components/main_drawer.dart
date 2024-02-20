@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pdv_app/provider/shift_provider.dart';
+import 'package:pdv_app/provider/user_provider.dart';
 import 'package:pdv_app/utils/app_router.dart';
+import 'package:provider/provider.dart';
 
 import '../utils/colors_theme.dart';
 
@@ -49,8 +52,46 @@ class MainDrawer extends StatelessWidget {
           );
   }
 
+  Widget _disableItem(IconData icon, String label) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 8.0,
+      ),
+      child: Card(
+        color: Colors.black26,
+        elevation: 5,
+        child: Row(
+          children: [
+            Expanded(
+              child: ListTile(
+                leading: Icon(icon, color: Colors.white),
+                title: Text(
+                  label,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            const Icon(
+              Icons.lock,
+              color: Colors.white,
+            ),
+            const SizedBox(width: 20),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final userId = Provider.of<UserProvider>(context).user.id;
+    final isOpenShift =
+        Provider.of<ShiftProvider>(context).isOpenShift(userId!);
+
     return Drawer(
       child: Column(
         children: <Widget>[
@@ -69,6 +110,20 @@ class MainDrawer extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
+          isOpenShift
+              ? _createItem(
+                  Icons.dvr,
+                  'Caixa',
+                  () {
+                    Navigator.of(context)
+                        .pushReplacementNamed(AppRouter.cashier);
+                  },
+                  router == AppRouter.home,
+                )
+              : _disableItem(
+                  Icons.dvr,
+                  'Caixa',
+                ),
           _createItem(
             Icons.timer,
             'Turnos',

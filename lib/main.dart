@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pdv_app/pages/cashier_page.dart';
 import 'package:pdv_app/pages/login_page.dart';
 import 'package:pdv_app/pages/product_form_page.dart';
 import 'package:pdv_app/pages/product_page.dart';
@@ -82,6 +83,7 @@ class MyApp extends StatelessWidget {
           AppRouter.productForm: (_) => const ProductFormPage(),
           AppRouter.user: (_) => const UserPage(),
           AppRouter.taker: (_) => const TakerPage(),
+          AppRouter.cashier: (_) => const CashierPage(),
         },
         debugShowCheckedModeBanner: false,
       ),

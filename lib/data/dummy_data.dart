@@ -1,5 +1,7 @@
 import '../model/category.dart';
+import '../model/order.dart';
 import '../model/product.dart';
+import '../model/sale.dart';
 import '../model/shift.dart';
 import '../model/supplier.dart';
 import '../model/taker.dart';
@@ -132,4 +134,41 @@ final List<Taker> takersData = [
     name: 'Taker 3',
     phone: '(34) 99999-9999',
   ),
+];
+
+final List<Order> ordersData = [
+  Order(
+    id: 1,
+    shiftId: 1,
+    paymentType: 'cash',
+    orderTime: DateTime.now(),
+  ),
+  Order(
+    id: 2,
+    shiftId: 1,
+    paymentType: 'credit',
+    orderTime: DateTime.now(),
+  ),
+  Order(
+    id: 3,
+    shiftId: 1,
+    paymentType: 'debit',
+    orderTime: DateTime.now(),
+  ),
+];
+
+final List<Sale> salesData = [
+  Sale(
+    id: 1,
+    orderId: 1,
+    productId: 1,
+    quantity: 1,
+  ),
+  Sale(
+    id: 2,
+    orderId: 2,
+    productId: 2,
+    quantity: 2,
+  ),
+  Sale(id: 3, orderId: 3, productId: 3, quantity: 3),
 ];

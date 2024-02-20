@@ -13,7 +13,7 @@ class User {
     required this.name,
     required String role,
   }) {
-    setRole(role);
+    setRole = role;
   }
 
   String get roleString {
@@ -38,7 +38,7 @@ class User {
     }
   }
 
-  void setRole(String role) {
+  set setRole(String role) {
     switch (role) {
       case 'manager':
         this.role = Role.manager;

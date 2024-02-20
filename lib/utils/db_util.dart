@@ -29,6 +29,7 @@ class DbUtil {
     await db.execute(_shifts);
     await db.execute(_takers);
     await db.execute(_sales);
+    await db.execute(_orders);
     await db.execute(_changeds);
     await db.execute(_insertUser);
   }
@@ -67,8 +68,8 @@ class DbUtil {
         cost_price TEXT NOT NULL,
         unit INTEGER NOT NULL,
         url_image TEXT,
-        category_id TEXT NOT NULL,
-        supplier_id TEXT NOT NULL,
+        category_id INTEGER NOT NULL,
+        supplier_id INTEGER NOT NULL,
         CONSTRAINT fk_category_id FOREIGN KEY (category_id) REFERENCES categories (id),
         CONSTRAINT fk_supplier_id FOREIGN KEY (supplier_id) REFERENCES suppliers (id)
   );
@@ -88,7 +89,7 @@ class DbUtil {
   String get _shifts => '''
   CREATE TABLE IF NOT EXISTS shifts(
         id INTEGER PRIMARY KEY,
-        user_id TEXT NOT NULL,
+        user_id INTEGER NOT NULL,
         start_time TIMESTAMP NOT NULL,
         end_time TIMESTAMP,
         start_cash TEXT NOT NULL,
@@ -110,14 +111,22 @@ class DbUtil {
   String get _sales => '''
   CREATE TABLE IF NOT EXISTS sales(
         id INTEGER PRIMARY KEY,
-        shift_id TEXT NOT NULL,
-        product_id TEXT NOT NULL,
-        taker_id TEXT,
+        order_id INTEGER NOT NULL,
+        product_id INTEGER NOT NULL,
         quantity INTEGER NOT NULL,
-        payment_method VARCHAR(255) NOT NULL,
-        sale_time TIMESTAMP NOT NULL,
-        CONSTRAINT fk_shift_id FOREIGN KEY (shift_id) REFERENCES shifts (id),
         CONSTRAINT fk_product_id FOREIGN KEY (product_id) REFERENCES products (id),
+        CONSTRAINT fk_order_id FOREIGN KEY (order_id) REFERENCES orders (id)
+  );
+  ''';
+
+  String get _orders => '''
+  CREATE TABLE IF NOT EXISTS orders(
+        id INTEGER PRIMARY KEY,
+        shift_id INTEGER NOT NULL,
+        taker_id INTEGER,
+        payment_method VARCHAR(255) NOT NULL,
+        order_time TIMESTAMP NOT NULL,
+        CONSTRAINT fk_shift_id FOREIGN KEY (shift_id) REFERENCES shifts (id),
         CONSTRAINT fk_taker_id FOREIGN KEY (taker_id) REFERENCES takers (id)
   );
   ''';
@@ -125,7 +134,7 @@ class DbUtil {
   String get _changeds => '''
   CREATE TABLE IF NOT EXISTS changeds(
         id INTEGER PRIMARY KEY,
-        shift_id TEXT NOT NULL,
+        shift_id INTEGER NOT NULL,
         value TEXT NOT NULL,
         changed_time TIMESTAMP NOT NULL,
         CONSTRAINT fk_shift_id FOREIGN KEY (shift_id) REFERENCES shifts (id)

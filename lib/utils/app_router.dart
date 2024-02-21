@@ -9,4 +9,5 @@ class AppRouter {
   static const String user = '/user';
   static const String taker = '/taker';
   static const String cashier = '/cashier';
+  static const String cashierPayment = '/cashier/payment';
 }

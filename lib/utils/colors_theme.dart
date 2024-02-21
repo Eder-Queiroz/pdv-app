@@ -25,4 +25,6 @@ class ColorsTheme {
   static const light900 = Color.fromRGBO(153, 153, 153, 1);
 
   static const danger = Color.fromRGBO(255, 5, 5, 1);
+
+  static const dark_gray = Color.fromRGBO(31, 41, 55, 1);
 }

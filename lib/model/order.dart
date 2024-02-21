@@ -1,3 +1,5 @@
+import 'package:pdv_app/model/sale.dart';
+
 enum PaymentType { cash, credit, debit, pix, borrowed }
 
 class Order {
@@ -6,6 +8,7 @@ class Order {
   final int? takerId;
   late PaymentType paymentType;
   final DateTime orderTime;
+  final List<Sale>? sales;
 
   Order({
     this.id,
@@ -13,6 +16,7 @@ class Order {
     this.takerId,
     required String paymentType,
     required this.orderTime,
+    this.sales,
   }) {
     setRole = paymentType;
   }

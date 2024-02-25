@@ -4,11 +4,14 @@ import 'package:pdv_app/utils/db_util.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../model/sale.dart';
+import '../model/taker.dart';
 
 class CashierProvider with ChangeNotifier {
   late Database db;
 
   String _paymentType = 'cash';
+
+  Taker? _takerSelected = null;
 
   final List<Sale> _items = [];
 
@@ -27,6 +30,13 @@ class CashierProvider with ChangeNotifier {
   String get paymentType => _paymentType;
   set paymentType(String value) {
     _paymentType = value;
+    notifyListeners();
+  }
+
+  Taker? get getTakerSelected => _takerSelected;
+
+  set setTakerSelected(Taker value) {
+    _takerSelected = value;
     notifyListeners();
   }
 
@@ -81,5 +91,48 @@ class CashierProvider with ChangeNotifier {
       }
       notifyListeners();
     }
+  }
+
+  Future<void> sell(List<Sale> sales, int shiftId) async {
+    db = await DbUtil.instance.database;
+
+    await db.transaction((txn) async {
+      final orderId = await txn.insert(
+        'orders',
+        {
+          'shift_id': shiftId,
+          'taker_id': _takerSelected?.id,
+          'payment_method': _paymentType,
+          'order_time': DateTime.now().toIso8601String(),
+        },
+      );
+
+      for (var i = 0; i < sales.length; i++) {
+        final productId = await txn.insert(
+          'sales',
+          {
+            'order_id': orderId,
+            'product_id': sales[i].productId,
+            'quantity': sales[i].getQuantity,
+          },
+        );
+
+        if (productId > 0) {
+          await txn.update(
+            'products',
+            {
+              'unit': sales[i].product!.unit - sales[i].getQuantity,
+            },
+            where: 'id = ?',
+            whereArgs: [sales[i].productId],
+          );
+        }
+      }
+    });
+
+    _items.clear();
+    paymentType = 'cash';
+    _takerSelected = null;
+    notifyListeners();
   }
 }

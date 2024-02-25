@@ -16,6 +16,10 @@ class TakerProvider with ChangeNotifier {
 
   int get itemsCount => _items.length;
 
+  Taker findById(int id) {
+    return _items.firstWhere((taker) => taker.id == id);
+  }
+
   Future<void> loadTakers() async {
     db = await DbUtil.instance.database;
 

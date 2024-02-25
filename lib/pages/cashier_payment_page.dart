@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../model/taker.dart';
 import '../provider/cashier_provider.dart';
+import '../provider/order_provider.dart';
 import '../provider/shift_provider.dart';
 import '../provider/user_provider.dart';
 import '../utils/colors_theme.dart';
@@ -45,6 +46,8 @@ class CashierPaymentPage extends StatelessWidget {
 
     void onSell() {
       provider.sell(provider.items, shiftId!);
+
+      Provider.of<OrderProvider>(context, listen: false).loadOrders();
 
       Navigator.of(context).pop();
     }

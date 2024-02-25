@@ -9,6 +9,7 @@ class Order {
   late PaymentType paymentType;
   final DateTime orderTime;
   final List<Sale>? sales;
+  final double? total;
 
   Order({
     this.id,
@@ -17,6 +18,7 @@ class Order {
     required String paymentType,
     required this.orderTime,
     this.sales,
+    this.total,
   }) {
     setRole = paymentType;
   }

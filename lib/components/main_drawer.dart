@@ -112,7 +112,7 @@ class MainDrawer extends StatelessWidget {
           const SizedBox(height: 20),
           isOpenShift
               ? _createItem(
-                  Icons.dvr,
+                  Icons.point_of_sale,
                   'Caixa',
                   () {
                     Navigator.of(context)
@@ -121,7 +121,7 @@ class MainDrawer extends StatelessWidget {
                   router == AppRouter.home,
                 )
               : _disableItem(
-                  Icons.dvr,
+                  Icons.point_of_sale,
                   'Caixa',
                 ),
           _createItem(
@@ -147,6 +147,14 @@ class MainDrawer extends StatelessWidget {
               Navigator.of(context).pushReplacementNamed(AppRouter.product);
             },
             router == AppRouter.product,
+          ),
+          _createItem(
+            Icons.request_quote_outlined,
+            "Vendas",
+            () {
+              Navigator.of(context).pushReplacementNamed(AppRouter.sale);
+            },
+            router == AppRouter.sale,
           ),
           _createItem(
             Icons.people,

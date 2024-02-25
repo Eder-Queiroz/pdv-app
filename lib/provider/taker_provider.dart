@@ -16,6 +16,10 @@ class TakerProvider with ChangeNotifier {
 
   int get itemsCount => _items.length;
 
+  String takerName(int id) {
+    return _items.firstWhere((taker) => taker.id == id).name;
+  }
+
   Taker findById(int id) {
     return _items.firstWhere((taker) => taker.id == id);
   }

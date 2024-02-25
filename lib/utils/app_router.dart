@@ -6,6 +6,7 @@ class AppRouter {
   static const String supplierForm = '/supplier/form';
   static const String product = '/product';
   static const String productForm = '/product/form';
+  static const String sale = '/sale';
   static const String user = '/user';
   static const String taker = '/taker';
   static const String cashier = '/cashier';
